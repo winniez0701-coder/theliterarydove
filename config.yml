@@ -1,0 +1,33 @@
+backend:
+  name: github
+  repo: REPLACE_USERNAME/REPLACE_REPOSITORY
+  branch: main
+  base_url: https://REPLACE-WITH-YOUR-OAUTH-SERVICE.example
+  auth_endpoint: auth
+
+# Image paths relative to this GitHub Pages project site.
+media_folder: "images/uploads"
+public_folder: "images/uploads"
+publish: true
+
+collections:
+  - name: "posts"
+    label: "Newspaper Articles"
+    label_singular: "Article"
+    folder: "_posts"
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Layout", name: "layout", widget: "hidden", default: "post" }
+      - { label: "Headline", name: "title", widget: "string" }
+      - { label: "Publication date", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm:ss Z" }
+      - { label: "Author", name: "author", widget: "string" }
+      - { label: "Section", name: "category", widget: "select", options: ["School News", "Opinion", "Literature", "Arts & Culture", "Science", "Interviews"] }
+      - { label: "Short summary", name: "description", widget: "text" }
+      - { label: "Featured on homepage", name: "featured", widget: "boolean", default: false }
+      - { label: "Cover photograph", name: "image", widget: "image", required: false }
+      - { label: "Photograph description (accessibility)", name: "image_alt", widget: "string", required: false }
+      - { label: "Full article", name: "body", widget: "markdown" }

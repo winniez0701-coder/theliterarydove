@@ -1,0 +1,4 @@
+---
+layout: default
+---
+<article class="story"><a class="back" href="{{ '/' | relative_url }}">← Back to newspaper</a><div class="eyebrow">{{ page.category | escape }}</div><h1>{{ page.title | escape }}</h1><p class="intro">{{ page.description | escape }}</p><p class="byline">By {{ page.author | escape }} · {{ page.date | date: "%d %B %Y" }}</p>{% if page.image %}<img class="story-image" src="{{ page.image | relative_url }}" alt="{{ page.image_alt | default: page.title | escape }}">{% endif %}<div class="prose">{{ content }}</div></article>

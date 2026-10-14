@@ -1,0 +1,8 @@
+title: The Literary Dove
+description: Where Words Take Flight
+url: ""
+baseurl: "/REPLACE_REPOSITORY"
+markdown: kramdown
+permalink: /articles/:title/
+exclude:
+  - README.md
