@@ -1,408 +1,873 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>The Literary Dove</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="The Literary Dove — a student-led school newspaper.">
+  <title>The Literary Dove | Where Words Take Flight</title>
 
   <style>
     :root {
-      --ink: #18202a;
-      --muted: #68717c;
-      --line: #d8d9d6;
+      --ink: #192a39;
+      --muted: #687580;
       --accent: #8d2432;
       --paper: #faf9f6;
+      --line: #d9d8d3;
+      --white: #ffffff;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
       background: var(--paper);
       color: var(--ink);
-      font-family: Georgia, serif;
+      font-family: Georgia, "Times New Roman", serif;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
 
-    header, .wrap, footer {
-      max-width: 1100px;
+    .container {
+      max-width: 1160px;
       margin: auto;
-      padding: 0 22px;
+      padding: 0 24px;
     }
 
-    .top {
+    .topbar {
+      border-bottom: 1px solid var(--line);
       font: 12px Arial, sans-serif;
+    }
+
+    .topbar-inner {
       display: flex;
       justify-content: space-between;
-      border-bottom: 1px solid var(--line);
-      padding: 18px 0;
+      gap: 16px;
+      padding-top: 14px;
+      padding-bottom: 14px;
     }
 
     .masthead {
       text-align: center;
-      padding: 30px 0 24px;
+      padding-top: 34px;
+      padding-bottom: 30px;
     }
 
     .masthead h1 {
-      font-size: clamp(36px, 6vw, 72px);
-      letter-spacing: -2px;
       margin: 0;
+      font-size: clamp(42px, 7vw, 83px);
+      letter-spacing: -3px;
+      font-weight: 700;
     }
 
-    .masthead p {
-      font: 13px Arial, sans-serif;
-      letter-spacing: 3px;
+    .tagline {
+      color: var(--accent);
       text-transform: uppercase;
-      color: var(--muted);
+      letter-spacing: 3px;
+      font: 12px Arial, sans-serif;
+      margin-top: 12px;
     }
 
-    nav {
+    .navigation {
+      border-top: 3px double var(--ink);
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .nav-inner {
       display: flex;
-      gap: 26px;
+      align-items: center;
       justify-content: center;
       flex-wrap: wrap;
-      border-top: 2px solid var(--ink);
-      border-bottom: 1px solid var(--ink);
-      padding: 14px;
-      font: 700 13px Arial, sans-serif;
+      gap: 22px;
+      padding-top: 15px;
+      padding-bottom: 15px;
     }
 
-    nav a:hover {
+    .nav-inner button {
+      border: 0;
+      background: transparent;
+      color: var(--ink);
+      font: bold 12px Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      padding: 6px 0;
+    }
+
+    .nav-inner button:hover,
+    .nav-inner button.active {
       color: var(--accent);
     }
 
-    main {
-      padding-top: 32px !important;
+    main { padding-top: 30px; }
+
+    .edition {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      font: 12px Arial, sans-serif;
+      color: var(--muted);
+      margin-bottom: 25px;
+    }
+
+    .search {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      background: var(--white);
+      width: min(260px, 100%);
+      border-radius: 3px;
+      font: 13px Arial, sans-serif;
     }
 
     .eyebrow {
-      font: 700 12px Arial, sans-serif;
-      letter-spacing: 1.6px;
-      color: var(--accent);
+      font: bold 11px Arial, sans-serif;
       text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent);
     }
 
     .hero {
       display: grid;
-      grid-template-columns: 1.7fr 1fr;
-      gap: 34px;
-      padding-bottom: 36px;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 32px;
       border-bottom: 1px solid var(--line);
+      padding-bottom: 36px;
     }
 
-    .hero .art {
-      min-height: 290px;
-      background: linear-gradient(145deg, #c9d9db, #657e91);
+    .hero-image, .card-image, .article-image {
       display: flex;
-      align-items: center;
       justify-content: center;
-      color: white;
-      font: 700 22px Arial, sans-serif;
+      align-items: center;
       text-align: center;
-      padding: 24px;
+      background: linear-gradient(140deg, #d6dce1, #8fa3ae);
+      color: #314455;
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    .hero-image {
+      min-height: 330px;
+      font: bold 18px Arial, sans-serif;
     }
 
     .hero h2 {
-      font-size: clamp(30px, 4vw, 48px);
-      line-height: 1.08;
-      margin: 12px 0;
+      font-size: clamp(30px, 4vw, 49px);
+      line-height: 1.1;
+      margin: 15px 0;
+      cursor: pointer;
+    }
+
+    .hero h2:hover, .card h3:hover {
+      color: var(--accent);
     }
 
     .summary {
+      color: #52616d;
+      line-height: 1.65;
       font-size: 17px;
-      line-height: 1.55;
-      color: #46505b;
     }
 
     .byline {
       font: 12px Arial, sans-serif;
       color: var(--muted);
+      margin-top: 20px;
     }
 
+    .read-button {
+      background: var(--ink);
+      color: white;
+      border: 0;
+      padding: 12px 19px;
+      font: bold 12px Arial, sans-serif;
+      margin-top: 22px;
+    }
+
+    .read-button:hover { background: var(--accent); }
+
     .section-heading {
-      font-size: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
       border-bottom: 2px solid var(--ink);
-      padding-bottom: 10px;
-      margin: 36px 0 22px;
+      padding-bottom: 12px;
+      margin: 38px 0 24px;
+    }
+
+    .section-heading h2 {
+      font-size: 29px;
+      margin: 0;
+    }
+
+    .section-heading span {
+      font: 12px Arial, sans-serif;
+      color: var(--muted);
     }
 
     .cards {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      gap: 28px;
     }
 
     .card {
       border-bottom: 1px solid var(--line);
-      padding-bottom: 22px;
+      padding-bottom: 24px;
     }
 
-    .card .thumb {
-      height: 155px;
-      background: #dbe1e1;
-      margin-bottom: 16px;
-      display: grid;
-      place-items: center;
+    .card-image {
+      height: 175px;
+      margin-bottom: 18px;
       font: 13px Arial, sans-serif;
-      color: #455;
+      background: #dce4e4;
     }
 
-    .card:nth-child(2) .thumb {
-      background: #e8dccc;
-    }
-
-    .card:nth-child(3) .thumb {
-      background: #d8dce9;
-    }
+    .card:nth-child(3n+2) .card-image { background: #e9e0d2; }
+    .card:nth-child(3n+3) .card-image { background: #e0dce8; }
 
     .card h3 {
-      font-size: 24px;
+      font-size: 25px;
       line-height: 1.2;
-      margin: 9px 0;
+      margin: 11px 0;
+      cursor: pointer;
     }
 
     .card p {
+      color: #596570;
       font-size: 15px;
-      line-height: 1.5;
-      color: #59616a;
+      line-height: 1.6;
     }
 
-    footer {
-      margin-top: 60px !important;
-      border-top: 2px solid var(--ink);
-      padding-top: 24px;
-      padding-bottom: 35px;
-      font: 13px Arial, sans-serif;
+    .empty {
+      padding: 45px 0;
       color: var(--muted);
+      text-align: center;
+      font: 15px Arial, sans-serif;
     }
 
     .notice {
-      background: #f0ede7;
-      padding: 20px;
-      margin-top: 38px;
-      font: 14px/1.6 Arial, sans-serif;
+      margin-top: 50px;
+      padding: 28px;
+      background: #f0ece5;
+      border-left: 4px solid var(--accent);
     }
+
+    .notice h2 { margin-top: 0; }
+    .notice p { line-height: 1.6; }
 
     .notice a {
       color: var(--accent);
       text-decoration: underline;
     }
 
-    @media (max-width: 700px) {
-      .hero {
-        grid-template-columns: 1fr;
-      }
+    footer {
+      border-top: 2px solid var(--ink);
+      margin-top: 65px;
+      padding: 28px 0 40px;
+      font: 13px Arial, sans-serif;
+      color: var(--muted);
+    }
 
-      .cards {
-        grid-template-columns: 1fr;
-      }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
 
-      .masthead h1 {
-        letter-spacing: -1px;
-      }
+    /* Full article reading view */
+    .article-view {
+      max-width: 760px;
+      margin: auto;
+      padding: 20px 0 50px;
+    }
 
-      .top {
-        gap: 15px;
-      }
+    .back-button {
+      border: 0;
+      background: transparent;
+      color: var(--accent);
+      padding: 0;
+      margin-bottom: 30px;
+      font: bold 13px Arial, sans-serif;
+    }
 
-      nav {
-        gap: 13px;
-      }
+    .article-view h1 {
+      font-size: clamp(36px, 6vw, 60px);
+      line-height: 1.12;
+      margin: 16px 0;
+    }
+
+    .article-intro {
+      font-size: 21px;
+      line-height: 1.5;
+      color: #53616b;
+    }
+
+    .article-image {
+      min-height: 330px;
+      margin: 35px 0;
+    }
+
+    .article-body {
+      font-size: 19px;
+      line-height: 1.85;
+    }
+
+    .article-body p { margin-bottom: 24px; }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 750px) {
+      .hero { grid-template-columns: 1fr; }
+      .cards { grid-template-columns: 1fr; }
+      .masthead h1 { letter-spacing: -1px; }
+      .nav-inner { gap: 12px; }
+      .edition { flex-direction: column; align-items: stretch; }
+      .search { width: 100%; }
+      .hero-image { min-height: 230px; }
+      .article-image { min-height: 220px; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- NEWSPAPER HEADER -->
-  <header>
-
-    <div class="top">
-      <span>Independent Student Voices</span>
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <span>Independent Student Journalism</span>
       <span id="today"></span>
     </div>
+  </div>
 
-    <div class="masthead">
-      <h1>The Literary Dove</h1>
-      <p>News · Ideas · Community</p>
-    </div>
-
-    <!-- NAVIGATION -->
-    <nav>
-      <a href="#latest">Latest</a>
-      <a href="#school">School News</a>
-      <a href="#opinion">Opinion</a>
-      <a href="#culture">Culture</a>
-      <a href="mailto:editor@example.com?subject=Article%20submission">
-        Submit a Story
-      </a>
-    </nav>
-
+  <header class="container masthead">
+    <h1>The Literary Dove</h1>
+    <p class="tagline">Where Words Take Flight</p>
   </header>
 
-  <!-- MAIN CONTENT -->
-  <main class="wrap">
+  <nav class="navigation" aria-label="Newspaper sections">
+    <div class="container nav-inner">
+      <button data-category="All" class="active">Home</button>
+      <button data-category="School News">School News</button>
+      <button data-category="Opinion">Opinion</button>
+      <button data-category="Literature">Literature</button>
+      <button data-category="Arts & Culture">Arts & Culture</button>
+      <button data-category="Science">Science</button>
+      <button data-category="Interviews">Interviews</button>
+    </div>
+  </nav>
 
-    <!-- FEATURED ARTICLE -->
-    <section class="hero">
+  <main class="container">
 
-      <div class="art">
-        Your lead story photograph goes here
+    <!-- HOMEPAGE -->
+    <div id="homepage">
+
+      <div class="edition">
+        <span>The Literary Dove · Student Newspaper</span>
+        <input
+          id="search"
+          class="search"
+          type="search"
+          placeholder="Search articles..."
+          aria-label="Search articles"
+        >
       </div>
 
-      <article>
-        <div class="eyebrow">Featured Story</div>
+      <section class="hero" id="hero"></section>
 
-        <h2>A New Chapter for The Literary Dove</h2>
+      <div class="section-heading">
+        <h2 id="sectionTitle">Latest Stories</h2>
+        <span id="articleCount"></span>
+      </div>
 
-        <p class="summary">
-          Welcome to The Literary Dove, a space for student
-          journalism, fresh perspectives, creativity and
-          the stories that matter to our school community.
-        </p>
+      <section class="cards" id="articleGrid"></section>
 
-        <p class="byline">
-          By The Editorial Team · 3 min read
-        </p>
-      </article>
-
-    </section>
-
-    <!-- LATEST STORIES -->
-    <h2 class="section-heading" id="latest">
-      Latest Stories
-    </h2>
-
-    <div class="cards">
-
-      <!-- SCHOOL NEWS -->
-      <article class="card" id="school">
-
-        <div class="thumb">
-          School News Photo
-        </div>
-
-        <div class="eyebrow">School News</div>
-
-        <h3>
-          What's Happening Around Campus This Term?
-        </h3>
-
+      <div class="notice">
+        <h2>Write for The Literary Dove</h2>
         <p>
-          From student initiatives to upcoming events,
-          here's what our reporters are following.
+          Do you enjoy writing, journalism, photography,
+          illustration or design? We'd love to hear from you.
+          Help us share the stories that matter to our school.
         </p>
-
-        <p class="byline">
-          By Student Reporter
-        </p>
-
-      </article>
-
-      <!-- OPINION -->
-      <article class="card" id="opinion">
-
-        <div class="thumb">
-          Opinion Illustration
-        </div>
-
-        <div class="eyebrow">Opinion</div>
-
-        <h3>
-          Why Student Voices Deserve to Be Heard
-        </h3>
-
         <p>
-          A place for thoughtful debate, different
-          perspectives and constructive ideas.
+          <a href="mailto:editor@example.com?subject=The%20Literary%20Dove%20Submission">
+            Submit a story to the editorial team
+          </a>
         </p>
-
-        <p class="byline">
-          By Student Columnist
-        </p>
-
-      </article>
-
-      <!-- CULTURE -->
-      <article class="card" id="culture">
-
-        <div class="thumb">
-          Arts & Culture Photo
-        </div>
-
-        <div class="eyebrow">Arts & Culture</div>
-
-        <h3>
-          Books, Music and Everything in Between
-        </h3>
-
-        <p>
-          Discover recommendations, reviews and
-          creative work from our community.
-        </p>
-
-        <p class="byline">
-          By Culture Editor
-        </p>
-
-      </article>
+      </div>
 
     </div>
 
-    <!-- EDITORIAL NOTICE -->
-    <div class="notice">
+    <!-- FULL ARTICLE PAGE -->
+    <div id="articlePage" class="hidden">
+      <article class="article-view">
+        <button class="back-button" id="backButton">
+          ← Back to newspaper
+        </button>
 
-      <strong>
-        We're Building Our Editorial Team!
-      </strong>
-
-      <p>
-        Interested in writing, photography or design?
-        Join The Literary Dove and help bring student
-        journalism to life.
-      </p>
-
-      <p>
-        Contact our editorial team to get involved.
-      </p>
-
+        <div class="eyebrow" id="articleCategory"></div>
+        <h1 id="articleTitle"></h1>
+        <p class="article-intro" id="articleIntro"></p>
+        <p class="byline" id="articleByline"></p>
+        <div class="article-image" id="articleImage"></div>
+        <div class="article-body" id="articleBody"></div>
+      </article>
     </div>
 
   </main>
 
-  <!-- FOOTER -->
   <footer>
-
-    <strong>The Literary Dove</strong>
-    · Student-led Journalism
-    · © <span id="year"></span>
-
-    <p>
-      The Literary Dove — The Voice of Our School.
-    </p>
-
+    <div class="container footer-inner">
+      <span>
+        <strong>The Literary Dove</strong>
+        · Student-led journalism
+      </span>
+      <span>© <span id="year"></span> · Where Words Take Flight</span>
+    </div>
   </footer>
 
-  <!-- AUTOMATIC DATE -->
   <script>
-    document.getElementById('today').textContent =
-      new Date().toLocaleDateString('en-GB', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
+    // ========================================
+    // EDIT YOUR NEWSPAPER ARTICLES HERE
+    // ========================================
+    //
+    // To publish a new article, copy an article
+    // object and change its details.
+    //
+    // Each article needs a unique id.
+    //
+    // For a photograph, upload it to GitHub
+    // and enter its path in "image".
+    //
+    // Example: image: "images/school.jpg"
+    //
+    // Leave image: "" to show a placeholder.
+    //
+    // IMPORTANT:
+    // The articles below are SAMPLE CONTENT.
+    // Replace them before your official launch.
+    // ========================================
+
+    const articles = [
+      {
+        id: "welcome",
+        category: "School News",
+        title: "Welcome to The Literary Dove",
+        summary: "A new platform for student voices, journalism, creativity and conversation.",
+        author: "The Editorial Team",
+        date: "14 October 2026",
+        image: "",
+        featured: true,
+        body: [
+          "Welcome to The Literary Dove, our student-led newspaper dedicated to sharing the stories, ideas and experiences of our school community.",
+          "Our aim is to create a space where students can express their perspectives, explore important issues and celebrate the achievements of others.",
+          "From school events and interviews to literature, science and opinion pieces, we hope The Literary Dove will become a lively platform for curiosity and creativity.",
+          "We look forward to welcoming new writers, photographers, editors and readers as our newspaper continues to grow."
+        ]
+      },
+      {
+        id: "school-life",
+        category: "School News",
+        title: "What's Happening Around School This Term?",
+        summary: "A look at student initiatives, activities and upcoming events.",
+        author: "Student Reporter",
+        date: "14 October 2026",
+        image: "",
+        featured: false,
+        body: [
+          "There is always something happening within our school community.",
+          "From clubs and societies to special events, students have plenty of opportunities to get involved.",
+          "This section will feature reports and updates from our student journalists."
+        ]
+      },
+      {
+        id: "student-voices",
+        category: "Opinion",
+        title: "Why Student Voices Deserve to Be Heard",
+        summary: "The importance of thoughtful discussion and sharing different perspectives.",
+        author: "Opinion Editor",
+        date: "14 October 2026",
+        image: "",
+        featured: false,
+        body: [
+          "A school newspaper is more than a collection of announcements.",
+          "It offers students an opportunity to explore ideas, develop arguments and contribute to discussions within their community.",
+          "Through respectful debate and thoughtful writing, we can learn from one another."
+        ]
+      },
+      {
+        id: "reading",
+        category: "Literature",
+        title: "The Books That Stay With Us",
+        summary: "Exploring the stories that shape our imagination and understanding.",
+        author: "Literature Editor",
+        date: "14 October 2026",
+        image: "",
+        featured: false,
+        body: [
+          "A memorable book can change how we see the world.",
+          "Literature allows us to encounter different perspectives, explore unfamiliar places and reflect on our own experiences.",
+          "In this section, we will share book reviews, reading recommendations and original creative writing."
+        ]
+      },
+      {
+        id: "arts",
+        category: "Arts & Culture",
+        title: "Celebrating Creativity in Our Community",
+        summary: "From music and theatre to art and photography.",
+        author: "Culture Editor",
+        date: "14 October 2026",
+        image: "",
+        featured: false,
+        body: [
+          "Creativity plays an important role in school life.",
+          "Our Arts and Culture section will celebrate student achievements and explore creative projects across the school.",
+          "We welcome reviews, interviews, artwork and contributions from aspiring writers and artists."
+        ]
+      },
+      {
+        id: "science",
+        category: "Science",
+        title: "Science Beyond the Classroom",
+        summary: "Discovering the questions, inventions and discoveries shaping our future.",
+        author: "Science Editor",
+        date: "14 October 2026",
+        image: "",
+        featured: false,
+        body: [
+          "Science is driven by curiosity and the desire to understand the world.",
+          "This section will explore exciting scientific discoveries, engineering projects and questions that go beyond the classroom.",
+          "We hope to make scientific ideas accessible and engaging for every reader."
+        ]
+      },
+      {
+        id: "interviews",
+        category: "Interviews",
+        title: "Conversations Worth Sharing",
+        summary: "Getting to know the people and perspectives within our school.",
+        author: "Interview Editor",
+        date: "14 October 2026",
+        image: "",
+        featured: false,
+        body: [
+          "Every person has a story worth hearing.",
+          "Through interviews, we hope to learn more about the experiences, interests and achievements of people in our school community.",
+          "Our interview series will feature thoughtful conversations with students, teachers and invited guests."
+        ]
+      }
+    ];
+
+    // ========================================
+    // WEBSITE FUNCTIONS
+    // You normally don't need to edit below.
+    // ========================================
+
+    let currentCategory = "All";
+    let searchTerm = "";
+
+    const homepage = document.getElementById("homepage");
+    const articlePage = document.getElementById("articlePage");
+    const articleGrid = document.getElementById("articleGrid");
+    const hero = document.getElementById("hero");
+
+    document.getElementById("today").textContent =
+      new Date().toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
       });
 
-    document.getElementById('year').textContent =
+    document.getElementById("year").textContent =
       new Date().getFullYear();
+
+    // Escape text before inserting it into HTML.
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[character]);
+    }
+
+    function imageHTML(article, className) {
+      if (article.image) {
+        return `
+          <img
+            src="${escapeHTML(article.image)}"
+            alt="${escapeHTML(article.title)}"
+            style="width:100%;height:100%;object-fit:cover;"
+          >
+        `;
+      }
+
+      return `<span>${escapeHTML(article.category)}</span>`;
+    }
+
+    function getFilteredArticles() {
+      return articles.filter(article => {
+        const matchesCategory =
+          currentCategory === "All" ||
+          article.category === currentCategory;
+
+        const searchableText = [
+          article.title,
+          article.summary,
+          article.category,
+          article.author,
+          ...article.body
+        ].join(" ").toLowerCase();
+
+        const matchesSearch =
+          searchableText.includes(searchTerm.toLowerCase());
+
+        return matchesCategory && matchesSearch;
+      });
+    }
+
+    function renderHomepage() {
+      const filtered = getFilteredArticles();
+
+      const featured = articles.find(article => article.featured);
+
+      const showHero =
+        currentCategory === "All" &&
+        searchTerm === "" &&
+        featured;
+
+      hero.classList.toggle("hidden", !showHero);
+
+      if (showHero) {
+        hero.innerHTML = `
+          <div class="hero-image">
+            ${imageHTML(featured, "hero-image")}
+          </div>
+
+          <div>
+            <div class="eyebrow">
+              Featured Story · ${escapeHTML(featured.category)}
+            </div>
+
+            <h2 data-open="${escapeHTML(featured.id)}">
+              ${escapeHTML(featured.title)}
+            </h2>
+
+            <p class="summary">
+              ${escapeHTML(featured.summary)}
+            </p>
+
+            <p class="byline">
+              By ${escapeHTML(featured.author)}
+              · ${escapeHTML(featured.date)}
+            </p>
+
+            <button class="read-button"
+                    data-open="${escapeHTML(featured.id)}">
+              Read Full Story →
+            </button>
+          </div>
+        `;
+      }
+
+      const visibleArticles = showHero
+        ? filtered.filter(article => article.id !== featured.id)
+        : filtered;
+
+      document.getElementById("sectionTitle").textContent =
+        currentCategory === "All"
+          ? "Latest Stories"
+          : currentCategory;
+
+      document.getElementById("articleCount").textContent =
+        `${visibleArticles.length} articles`;
+
+      if (visibleArticles.length === 0) {
+        articleGrid.innerHTML =
+          `<p class="empty">No articles found. Try another search or section.</p>`;
+        return;
+      }
+
+      articleGrid.innerHTML = visibleArticles.map(article => `
+        <article class="card">
+
+          <div class="card-image">
+            ${imageHTML(article, "card-image")}
+          </div>
+
+          <div class="eyebrow">
+            ${escapeHTML(article.category)}
+          </div>
+
+          <h3 data-open="${escapeHTML(article.id)}">
+            ${escapeHTML(article.title)}
+          </h3>
+
+          <p>${escapeHTML(article.summary)}</p>
+
+          <p class="byline">
+            By ${escapeHTML(article.author)}
+            · ${escapeHTML(article.date)}
+          </p>
+
+          <button class="read-button"
+                  data-open="${escapeHTML(article.id)}">
+            Read Article →
+          </button>
+
+        </article>
+      `).join("");
+    }
+
+    function openArticle(id) {
+      const article = articles.find(item => item.id === id);
+      if (!article) return;
+
+      homepage.classList.add("hidden");
+      articlePage.classList.remove("hidden");
+
+      document.getElementById("articleCategory").textContent =
+        article.category;
+
+      document.getElementById("articleTitle").textContent =
+        article.title;
+
+      document.getElementById("articleIntro").textContent =
+        article.summary;
+
+      document.getElementById("articleByline").textContent =
+        `By ${article.author} · ${article.date}`;
+
+      document.getElementById("articleImage").innerHTML =
+        imageHTML(article, "article-image");
+
+      const bodyContainer = document.getElementById("articleBody");
+      bodyContainer.replaceChildren();
+
+      article.body.forEach(paragraph => {
+        const p = document.createElement("p");
+        p.textContent = paragraph;
+        bodyContainer.appendChild(p);
+      });
+
+      history.pushState(
+        { articleId: id },
+        "",
+        "#article-" + encodeURIComponent(id)
+      );
+
+      window.scrollTo(0, 0);
+    }
+
+    function showHomepage() {
+      articlePage.classList.add("hidden");
+      homepage.classList.remove("hidden");
+      renderHomepage();
+      window.scrollTo(0, 0);
+    }
+
+    function goHome() {
+      history.pushState({}, "", window.location.pathname);
+      showHomepage();
+    }
+
+    // Click article headlines and read buttons.
+    document.addEventListener("click", event => {
+      const articleButton = event.target.closest("[data-open]");
+
+      if (articleButton) {
+        openArticle(articleButton.dataset.open);
+      }
+    });
+
+    // Navigation categories.
+    document.querySelectorAll("[data-category]").forEach(button => {
+      button.addEventListener("click", () => {
+        currentCategory = button.dataset.category;
+
+        document.querySelectorAll("[data-category]").forEach(item => {
+          item.classList.toggle("active", item === button);
+        });
+
+        goHome();
+      });
+    });
+
+    // Search articles.
+    document.getElementById("search").addEventListener("input", event => {
+      searchTerm = event.target.value.trim();
+      renderHomepage();
+    });
+
+    // Back button.
+    document.getElementById("backButton").addEventListener("click", goHome);
+
+    // Browser back/forward support.
+    window.addEventListener("popstate", () => {
+      const hash = decodeURIComponent(window.location.hash);
+
+      if (hash.startsWith("#article-")) {
+        const id = hash.slice(9);
+        const article = articles.find(item => item.id === id);
+
+        if (article) {
+          // Render without adding another history entry.
+          openArticleFromHistory(article);
+          return;
+        }
+      }
+
+      showHomepage();
+    });
+
+    function openArticleFromHistory(article) {
+      homepage.classList.add("hidden");
+      articlePage.classList.remove("hidden");
+
+      document.getElementById("articleCategory").textContent =
+        article.category;
+
+      document.getElementById("articleTitle").textContent =
+        article.title;
+
+      document.getElementById("articleIntro").textContent =
+        article.summary;
+
+      document.getElementById("articleByline").textContent =
+        `By ${article.author} · ${article.date}`;
+
+      document.getElementById("articleImage").innerHTML =
+        imageHTML(article, "article-image");
+
+      const bodyContainer = document.getElementById("articleBody");
+      bodyContainer.replaceChildren();
+
+      article.body.forEach(paragraph => {
+        const p = document.createElement("p");
+        p.textContent = paragraph;
+        bodyContainer.appendChild(p);
+      });
+
+      window.scrollTo(0, 0);
+    }
+
+    // Load a shared article link directly.
+    const initialHash = decodeURIComponent(window.location.hash);
+
+    if (initialHash.startsWith("#article-")) {
+      const initialId = initialHash.slice(9);
+      const initialArticle = articles.find(item => item.id === initialId);
+
+      if (initialArticle) {
+        openArticleFromHistory(initialArticle);
+      } else {
+        renderHomepage();
+      }
+    } else {
+      renderHomepage();
+    }
   </script>
 
 </body>
